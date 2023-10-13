@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<bible version="nvi">
+    <book name="Gênesis" abbr="gen">
+        <c n="1">
+            <v n="1">No princípio criou Deus o céu e a terra.</v>
+            <v n="2">E a terra era sem forma e vazia; e havia trevas sobre a face do abismo; e o Espírito de Deus se movia sobre a face das águas.</v>
+            <v n="3">E disse Deus: Haja luz; e houve luz.</v>
+        </c>
+        <c n="2">
+            <v n="1">Assim os céus, a terra e todo o seu exército foram acabados.</v>
+            <v n="2">E havendo Deus acabado no dia sétimo a obra que fizera, descansou no sétimo dia de toda a sua obra, que tinha feito.</v>
+            <v n="3">E abençoou Deus o dia sétimo, e o santificou; porque nele descansou de toda a sua obra que Deus criara e fizera.</v>
+        </c>
+    </book>
+    <book name="Êxodo" abbr="exd">
+        <c n="1">
+            <v n="1">Estes pois são os nomes dos filhos de Israel, que entraram no Egito com Jacó; cada um entrou com sua casa:</v>
+            <v n="2">Rúben, Simeão, Levi, e Judá;</v>
+            <v n="3">Issacar, Zebulom, e Benjamim;</v>
+        </c>
+        <c n="2">
+            <v n="1">E foi um homem da casa de Levi e casou com uma filha de Levi.</v>
+            <v n="2">E a mulher concebeu e deu à luz um filho; e, vendo que ele era formoso, escondeu-o três meses.</v>
+            <v n="3">Não podendo, porém, mais escondê-lo, tomou uma arca de juncos, e a revestiu com barro e betume; e, pondo nela o menino, a pôs nos juncos à margem do rio.</v>
+        </c>
+    </book>
+</bible>

@@ -15,6 +15,10 @@ body {
   background-size: 500px auto;
 }
 
+:root {
+  --base-font-size: 17px;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -48,6 +52,11 @@ body {
 
     margin: 0 !important;
   }
+
+  &__botoes {
+    display: flex;
+    align-items: end;
+  }
 }
 
 .pagina-body {
@@ -58,5 +67,9 @@ body {
   text-align: justify;
 
   height: 80%;
-  // border: 1px solid red;
+
+  &__versiculos {
+    font-size: var(--base-font-size) !important;
+    padding-right: 20px;
+  }
 }

@@ -1,10 +1,9 @@
 import { Row, Col, Select, Typography, Space, Input } from "antd";
 import "./assets/css/biblia.scss";
-import useBible from "./Hooks/useBible";
+import useBible, { Verse } from "./Hooks/useBible";
 import { DefaultOptionType } from "antd/es/select";
 import { ChangeEvent, useState } from "react";
 import VersDisplay from "./Components/VersDisplay";
-import { Verse } from "./Hooks/useBible";
 
 const { Title, Text } = Typography;
 

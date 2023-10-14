@@ -154,7 +154,7 @@ const App = () => {
       <Row>
         <Col xs={24} className="pagina">
           <Row>
-            <Col xs={20}>
+            <Col xs={18} md={21}>
               <Title className="pagina-header pagina-header__livro">
                 {book?.title}
               </Title>
@@ -164,26 +164,30 @@ const App = () => {
                 </Title>
               )}
             </Col>
-            <Col className="pagina-header__botoes" xs={4}>
+            <Col className="pagina-header__botoes" xs={6} md={3}>
               {cap && (
-                <Space>
-                  <Button
-                    size="small"
-                    type="primary"
-                    ghost
-                    onClick={() => mudarFonte("+")}
-                  >
-                    <FontSizeOutlined /> <PlusOutlined />
-                  </Button>
-                  <Button
-                    size="small"
-                    type="primary"
-                    ghost
-                    onClick={() => mudarFonte("-")}
-                  >
-                    <FontSizeOutlined /> <MinusOutlined />
-                  </Button>
-                </Space>
+                <Row>
+                  <Col xs={24}>
+                    <Button
+                      size="default"
+                      type="primary"
+                      ghost
+                      onClick={() => mudarFonte("+")}
+                    >
+                      <FontSizeOutlined /> <PlusOutlined />
+                    </Button>
+                  </Col>
+                  <Col xs={24}>
+                    <Button
+                      size="default"
+                      type="primary"
+                      ghost
+                      onClick={() => mudarFonte("-")}
+                    >
+                      <FontSizeOutlined /> <MinusOutlined />
+                    </Button>
+                  </Col>
+                </Row>
               )}
             </Col>
             <Col xs={24}>

@@ -46,6 +46,8 @@ body {
 
   &__livro,
   &__capitulo {
+    display: flex;
+    align-items: baseline;
     position: relative;
     display: inline;
     text-align: center;
@@ -55,7 +57,7 @@ body {
 
   &__botoes {
     display: flex;
-    align-items: end;
+    align-items: baseline;
   }
 }
 

@@ -1,7 +1,7 @@
 import { Book, Cap, Verse, Biblia } from "../Hooks/useBible";
 
 export const getBible = async (version: string) => {
-    const response = await fetch(`src/assets/xml/${version}.xml`);
+    const response = await fetch(`./assets/xml/${version}.xml`);
     const xmlString = await response.text();
     const xmlDoc = new DOMParser().parseFromString(xmlString, "text/xml");
     const xmlBooks = [...xmlDoc.querySelectorAll("book")];

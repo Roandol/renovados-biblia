@@ -48,7 +48,6 @@ const useBible = () => {
         const capFind = book?.caps.find(c => c.number === value);
 
         setCap(capFind as Cap);
-        console.log(capFind);
 
         searchVerses(versSearched, capFind);
 
@@ -69,8 +68,8 @@ const useBible = () => {
             else if (cap)
                 versiculoRange = cap.verses.slice(firstNumber, secondNumber);
 
-            console.log({ value, versSearched, versesSelected, versiculoRange });
-            console.log(versiculoRange)
+            // console.log({ value, versSearched, versesSelected, versiculoRange });
+            // console.log(versiculoRange)
 
             setVersesSelected(versiculoRange);
 

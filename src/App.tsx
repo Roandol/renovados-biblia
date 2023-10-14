@@ -169,7 +169,6 @@ const App = () => {
                 <Row>
                   <Col xs={24}>
                     <Button
-                      size="default"
                       type="primary"
                       ghost
                       onClick={() => mudarFonte("+")}
@@ -179,7 +178,6 @@ const App = () => {
                   </Col>
                   <Col xs={24}>
                     <Button
-                      size="default"
                       type="primary"
                       ghost
                       onClick={() => mudarFonte("-")}

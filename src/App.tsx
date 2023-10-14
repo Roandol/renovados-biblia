@@ -1,9 +1,14 @@
-import { Row, Col, Select, Typography, Space, Input } from "antd";
+import { Row, Col, Select, Typography, Space, Input, Button } from "antd";
 import "./assets/css/biblia.scss";
 import useBible, { Verse } from "./Hooks/useBible";
 import { DefaultOptionType } from "antd/es/select";
 import { ChangeEvent, useState } from "react";
 import VersDisplay from "./Components/VersDisplay";
+import {
+  MinusOutlined,
+  PlusOutlined,
+  FontSizeOutlined,
+} from "@ant-design/icons";
 
 const { Title, Text } = Typography;
 
@@ -57,6 +62,21 @@ const App = () => {
 
   const handleVersionChange = (value: string) => {
     changeVersion(value);
+  };
+
+  const mudarFonte = (value: string) => {
+    const root = getComputedStyle(document.documentElement);
+    const fontSize = parseInt(
+      root.getPropertyValue("--base-font-size").split(`px`)[0]
+    );
+    console.log("CURRENT FONT SIZE: ", fontSize);
+
+    const newFontSize = value == "+" ? fontSize + 5 : fontSize - 5;
+
+    document.documentElement.style.setProperty(
+      "--base-font-size",
+      newFontSize + "px"
+    );
   };
 
   const optionsBooks: DefaultOptionType[] =
@@ -144,7 +164,26 @@ const App = () => {
                 </Title>
               )}
             </Col>
-            <Col xs={4}></Col>
+            <Col className="pagina-header__botoes" xs={4}>
+              <Space>
+                <Button
+                  size="small"
+                  type="primary"
+                  ghost
+                  onClick={() => mudarFonte("+")}
+                >
+                  <FontSizeOutlined /> <PlusOutlined />
+                </Button>
+                <Button
+                  size="small"
+                  type="primary"
+                  ghost
+                  onClick={() => mudarFonte("-")}
+                >
+                  <FontSizeOutlined /> <MinusOutlined />
+                </Button>
+              </Space>
+            </Col>
             <Col xs={24}>
               {cap && <div className="pagina-body">{verss}</div>}
             </Col>

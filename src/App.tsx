@@ -165,24 +165,26 @@ const App = () => {
               )}
             </Col>
             <Col className="pagina-header__botoes" xs={4}>
-              <Space>
-                <Button
-                  size="small"
-                  type="primary"
-                  ghost
-                  onClick={() => mudarFonte("+")}
-                >
-                  <FontSizeOutlined /> <PlusOutlined />
-                </Button>
-                <Button
-                  size="small"
-                  type="primary"
-                  ghost
-                  onClick={() => mudarFonte("-")}
-                >
-                  <FontSizeOutlined /> <MinusOutlined />
-                </Button>
-              </Space>
+              {cap && (
+                <Space>
+                  <Button
+                    size="small"
+                    type="primary"
+                    ghost
+                    onClick={() => mudarFonte("+")}
+                  >
+                    <FontSizeOutlined /> <PlusOutlined />
+                  </Button>
+                  <Button
+                    size="small"
+                    type="primary"
+                    ghost
+                    onClick={() => mudarFonte("-")}
+                  >
+                    <FontSizeOutlined /> <MinusOutlined />
+                  </Button>
+                </Space>
+              )}
             </Col>
             <Col xs={24}>
               {cap && <div className="pagina-body">{verss}</div>}

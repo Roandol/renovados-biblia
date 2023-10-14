@@ -1,64 +1,129 @@
-import { Card, Row, Col, Select, InputNumber } from "antd";
-import "./App.css";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import xml2js from "xml2js";
+import { Card, Row, Col, Select, InputNumber, Typography, Space, Input } from "antd";
+// import "./assets/css/App.scss";
+import "./assets/css/biblia.scss";
+import useBible from "./Hooks/useBible";
+import { DefaultOptionType } from "antd/es/select";
+// import CapDisplay from "./Components/CapDisplay";
+import { ChangeEvent, useState } from "react";
+import VersDisplay from './Components/VersDisplay';
+import { Verse } from './Hooks/useBible';
+
+const { Title, Text } = Typography
+
+
+// interface ICapProps {
+//   cap: Cap,
+//   verses?: Verse[]
+// }
+
+const transfomVerse = (v: Verse, i: number) => {
+
+  return <>
+    <VersDisplay vers={v} key={i + 1} />
+  </>
+}
 
 const App = () => {
-  // const [livros, setLivros] = useState();
-  const [xmlData, setXmlData] = useState("");
+  const { nameBooks, book, cap, versesSelected, searchBook, searchCap, searchVerses: searchVers, changeVersion } = useBible();
+  const [capNumber, setCapNumber] = useState<number | null>();
+  const [inputVersValue, setInputVersValue] = useState("");
+  const verss = versesSelected.length ? versesSelected.map(transfomVerse) : cap?.verses.map(transfomVerse);
 
-  // useEffect(() => {
-  //   const parser = new xml2js.Parser();
-  //   parser.parseString(xmlData, function (err, result) {
-  //     console.log({ result });
+  const handleChangeBook = (name: string) => {
+    searchBook(name);
+    setCapNumber(null);
+    setInputVersValue("");
+  }
 
-  //     setLivros(result);
-  //   });
-  // }, [xmlData]);
+  const handleCapNumber = (value: number | null) => {
+    searchCap(value);
+    setCapNumber(value);
+  }
 
-  const getXml = async () => {
-    const response = await fetch("src/assets/xml/nvi.xml");
-    const xmlString = await response.text();
-    const xmlDoc = new DOMParser().parseFromString(xmlString, "text/xml");
+  const handleVersNumber = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.match(/\b\d+\b/g)?.slice(0, 2) || [];
 
-    // setXmlData(xmlString);
-    // console.log(typeof xmlDoc);
-    // console.log({ xmlDoc });
+    if (value[0] > value[1]) {
+      searchVers([]);
+      return;
+    }
+         
+    searchVers(value);
+    setInputVersValue(e.target.value);
+  }
 
-    getNomesLivros(xmlDoc);
-  };
+  const handleVersionChange = (value: string) => {
 
-  const getNomesLivros = async (xml) => {
-    const livros = xml.getElementsByTagName("book");
-    console.log({ livros });
+    changeVersion(value);
+  }
 
-    livros.map((livro): HTMLCollection => {
-      console.log("livro", livro.firstChild.nodeValue);
-
-      return "teste";
-    });
-  };
-
-  getXml();
+  const optionsBooks: DefaultOptionType[] = nameBooks?.map(nb => {
+    return {
+      label: nb,
+      value: nb
+    }
+  }) || [];
+  const optionsCaps: DefaultOptionType[] = book?.caps.map(c => {
+    return {
+      label: c.number,
+      value: c.number
+    }
+  }) || [];
+  const optionsVersion: DefaultOptionType[] = [
+    {
+      label: "NVI - Nova Versão Internacional",
+      value: "NVI"
+    },
+    {
+      label: "AA - Almeida Revisada Imprensa Bíblica ",
+      value: "AA"
+    },
+    {
+      label: "ACF - Almeida Corrigida e Fiel",
+      value: "ACF"
+    }
+  ]
   return (
     <>
-      <Card>
-        <Row>
-          <Col xs={6}>
-            <Select placeholder="Livro" />
-          </Col>
-          <Col xs={3}>
-            <InputNumber placeholder="Capítulo" min={1} />
-          </Col>
-          <Col xs={3}>
-            <InputNumber placeholder="Versículo" min={1} />
-          </Col>
-          <Col xs={6}>
-            <Select placeholder="Versão" />
-          </Col>
-        </Row>
-      </Card>
+      <Row>
+        <Col md={6} xs={12}>
+          <Select showSearch placeholder="Livro" onChange={handleChangeBook} options={optionsBooks} />
+        </Col>
+        <Col md={6} xs={12}>
+          <Space>
+            <Text>Capítulo:</Text>
+            <Select showSearch placeholder="Capítulo" options={optionsCaps} value={capNumber} onChange={handleCapNumber} />
+          </Space>
+        </Col>
+        <Col md={6} xs={12}>
+          <Space>
+            <Text>Versículo:</Text>
+            <Input placeholder="Versículo" value={inputVersValue} onChange={handleVersNumber} min={1} />
+          </Space>
+        </Col>
+        <Col md={6} xs={12}>
+          <Select placeholder="Versão" onChange={handleVersionChange} defaultValue={"NVI"} options={optionsVersion} />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={24} className="pagina">
+            <Title className="pagina-header pagina-header__livro">{book?.title}</Title>
+            {/* {!cap && book?.caps.map((c, i) => {
+              return <>
+              <CapDisplay key={i + 1} cap={c} />
+              </>
+        })} */}
+            {cap && (
+              <>
+                <Title className='pagina-header pagina-header__capitulo'>{cap.number}</Title>
+                <div className='pagina-body'>
+                  {verss}
+                </div>
+              </>
+            )}
+          {/* </Card> */}
+        </Col>
+      </Row>
     </>
   );
 };

@@ -1,20 +1,12 @@
-import { Card, Row, Col, Select, InputNumber, Typography, Space, Input } from "antd";
-// import "./assets/css/App.scss";
+import { Row, Col, Select, Typography, Space, Input } from "antd";
 import "./assets/css/biblia.scss";
 import useBible from "./Hooks/useBible";
 import { DefaultOptionType } from "antd/es/select";
-// import CapDisplay from "./Components/CapDisplay";
 import { ChangeEvent, useState } from "react";
 import VersDisplay from './Components/VersDisplay';
 import { Verse } from './Hooks/useBible';
 
 const { Title, Text } = Typography
-
-
-// interface ICapProps {
-//   cap: Cap,
-//   verses?: Verse[]
-// }
 
 const transfomVerse = (v: Verse, i: number) => {
 

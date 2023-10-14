@@ -13,11 +13,7 @@ import {
 const { Title, Text } = Typography;
 
 const transfomVerse = (v: Verse, i: number) => {
-  return (
-    <>
-      <VersDisplay vers={v} key={i + 1} />
-    </>
-  );
+  return <VersDisplay vers={v} key={i + 1} />
 };
 
 const App = () => {
@@ -50,13 +46,9 @@ const App = () => {
 
   const handleVersNumber = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.match(/\b\d+\b/g)?.slice(0, 2) || [];
+    const test = parseInt(value[0]) > parseInt(value[1]);
 
-    if (value[0] > value[1]) {
-      searchVers([]);
-      return;
-    }
-
-    searchVers(value);
+    searchVers(test ? [] : value);
     setInputVersValue(e.target.value);
   };
 
@@ -69,7 +61,6 @@ const App = () => {
     const fontSize = parseInt(
       root.getPropertyValue("--base-font-size").split(`px`)[0]
     );
-    console.log("CURRENT FONT SIZE: ", fontSize);
 
     const newFontSize = value == "+" ? fontSize + 5 : fontSize - 5;
 

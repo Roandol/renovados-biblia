@@ -11,12 +11,16 @@ interface IVersProps {
 
 const VersDisplay: React.FunctionComponent<IVersProps> = ({ vers }) => {
   const [marked, setMarked] = useState(false);
+  const style: Partial<React.CSSProperties> = {
+    backgroundColor: marked ? "black" : "transparent",
+    color: marked ? "white" : "black"
+  }
 
   return (
     <Paragraph
       className="pagina-body__versiculos"
       onClick={() => setMarked(!marked)}
-      style={{ backgroundColor: marked ? "red" : "transparent" }}
+      style={style}
     >
       <Text strong>{vers.number}.</Text>
       {vers.content}

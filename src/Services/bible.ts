@@ -1,60 +1,35 @@
-import { Book, Cap, Verse, Biblia } from "../Hooks/useBible";
+import { Verse } from "../Hooks/types";
+import xmlReader from "./xml";
 
-export const getBible = async (version: string) => {
-    const response = await fetch(`./assets/xml/${version}.xml`);
-    const xmlString = await response.text();
-    const xmlDoc = new DOMParser().parseFromString(xmlString, "text/xml");
-    const xmlBooks = [...xmlDoc.querySelectorAll("book")];
-    const books: Book[] = getBooks(xmlBooks);
-    const newBible: Biblia = {
-        books,
-        version: version
-    }
+const urlBase = (path: string) => `./assets/xml/bible/${path}.xml`;
 
-    return newBible;
+export const getAllBooks = async (version: string): Promise<Element[]> => {
+    const xmlDoc = await xmlReader(urlBase(version));
+    const booksElements = [...xmlDoc.querySelectorAll("book")];
+
+    return booksElements;
 }
 
-function getBooks(xmlBooks: Element[]) {
-    const books = xmlBooks.map((b) => {
-        const title = b.getAttribute("name") || "";
-        const caps = getCaps(b);
+export const getVers = async (book: string, cap: number, vers: number[], version: string): Promise<Verse[]> => {
+    const bookElements = await getAllBooks(version);
+    const bookSelected = bookElements.find(b => b.getAttribute("name") === book) as Element;
+    const capSelected = bookSelected.querySelector(`c[n="${cap}"]`) as Element;
+    const [versInital, versEnd] = vers;
+    const allVerss = [...capSelected.querySelectorAll("v")];
+    const verssRange = allVerss.slice(versInital - 1, versEnd ?? versInital);
+    const verseList: Verse[] = verssRange.map(v => ({
+        number: Number(v.getAttribute("n")),
+        content: v.textContent as string
+    }))
 
-        return {
-            title,
-            caps
-        }
-
-    })
-
-    return books;
+    return verseList;
 }
 
-function getCaps(book: Element): Cap[] {
-    const caps = [...book.querySelectorAll("c")].map(c => {
-        const number = Number(c.getAttribute("n"));
-        const verses = getVerss(c);
+export const getCapNumber = async (version: string, book: string) => {
+    const books = await getAllBooks(version);
+    const bookElement = books.find(b => b.getAttribute("name") === book) as Element;
+    const caps = [...bookElement.querySelectorAll("c")];
+    const capNumbers = caps.map(c => ({ number: Number(c.getAttribute("n")) as number }));
 
-        return {
-            number,
-            verses
-        }
-    });
-
-    return caps;
-
-}
-
-function getVerss(cap: Element): Verse[] {
-    const verss: Verse[] = [...cap.querySelectorAll("v")].map(v => {
-        const number = Number(v.getAttribute("n"));
-        const content = v.textContent || "";
-
-        return {
-            number,
-            content
-        }
-    });
-
-    return verss
-
+    return capNumbers
 }

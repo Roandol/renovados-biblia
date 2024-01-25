@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Typography } from "antd";
 import { useState } from "react";
-import { Verse } from "../Hooks/useBible";
+import { Verse } from "../Hooks/types";
 
 const { Paragraph, Text } = Typography;
 
@@ -22,7 +22,7 @@ const VersDisplay: React.FunctionComponent<IVersProps> = ({ vers }) => {
       onClick={() => setMarked(!marked)}
       style={style}
     >
-      <Text strong>{vers.number}.</Text>
+      <Text strong style={style} className="pagina-body__versiculos">{vers.number}.</Text>
       {vers.content}
     </Paragraph>
   );

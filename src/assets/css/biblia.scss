@@ -13,6 +13,7 @@ body {
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: 500px auto;
+  // height: max-content;
 }
 
 :root {
@@ -62,13 +63,12 @@ body {
 }
 
 .pagina-body {
-  position: fixed;
+  position: relative;
   width: 95%;
   margin-top: 10px;
-  overflow-y: scroll;
+  overflow-y: auto;
   text-align: justify;
-
-  height: 80%;
+  height: 80vh;
 
   &__versiculos {
     font-size: var(--base-font-size) !important;

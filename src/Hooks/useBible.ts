@@ -1,112 +1,66 @@
-import { useEffect, useState } from "react";
-import { getBible } from "../Services/bible";
-
-export interface Verse {
-    number: number;
-    content: string;
-}
-
-export interface Cap {
-    number: number;
-    verses: Verse[];
-}
-
-export interface Book {
-    title: string;
-    caps: Cap[];
-}
-
-export interface Biblia {
-    books: Book[];
-    version: string;
-}
+import { useCallback, useEffect, useState } from "react";
+import { getAllBooks, getCapNumber, getVers } from "../Services/bible";
+import { Verse } from "./types";
 
 const useBible = () => {
-    const [bible, setBible] = useState<Biblia>();
-    const nameBooks = bible?.books.map(b => b.title);
-    const [version, setVersion] = useState<string>("NVI");
-    const [book, setBook] = useState<Book>();
-    const [cap, setCap] = useState<Cap>();
-    const [versSearched, setVerseSearch] = useState<string[]>([]);
-    const [versesSelected, setVersesSelected] = useState<Verse[]>([]);
+    const [version, setVersion] = useState("NVI");
+    const [books, setBooks] = useState<string[]>([]);
+    const [capNumbers, setCapNumbers] = useState<{ number: number }[]>([]);
 
-    const changeVersion = (version: string) => {
+    const [bookSelected, setBookSelected] = useState("");
+    const [capSelected, setCapSelected] = useState(0);
+    const [versesSelected, setVerseSelected] = useState<Verse[]>();
+
+    const [rangeVerse, setRangeVerse] = useState<number[]>([]);
+
+    const searchVerse = useCallback(async (range: number[], _version?: string, cap?: number) => {
+        const verses = await getVers(bookSelected, cap ?? capSelected, range, _version ?? version);
+
+        setVerseSelected(verses);
+
+        const test = JSON.stringify(range) !== JSON.stringify(rangeVerse);
+        if (test)
+            setRangeVerse(range);
+    }, [version, bookSelected, capSelected, rangeVerse]);
+
+    const changeVersion = useCallback((version: string) => {
         setVersion(version);
-    }
+        searchVerse(rangeVerse, version);
+    }, [rangeVerse, searchVerse])
 
-    const searchBook = (name: string) => {
-        const book = bible?.books.find(b => b.title === name);
+    const changeCap = useCallback((cap: number) => {
+        setCapSelected(cap);
+        searchVerse(rangeVerse, version, cap);
+    }, [rangeVerse, searchVerse, version])
 
-        setBook(book);
+    const changeBook = useCallback(async (book: string) => {
+        setBookSelected(book);
 
-        if (cap) {
-            setCap(undefined);
-        }
-    }
-
-    const searchCap = (value: number | null) => {
-        const capFind = book?.caps.find(c => c.number === value);
-
-        setCap(capFind as Cap);
-
-        searchVerses(versSearched, capFind);
-
-        return capFind;
-    }
-
-    const searchVerses = (value: string[], _cap?: Cap) => {
-        setVerseSearch(value);
-
-        if (value.length > 1) {
-            const firstNumber = parseInt(value[0]) - 1;
-            const secondNumber = parseInt(value[1]);
-            let versiculoRange: Verse[] = [];
-
-
-            if (_cap)
-                versiculoRange = _cap.verses.slice(firstNumber, secondNumber);
-            else if (cap)
-                versiculoRange = cap.verses.slice(firstNumber, secondNumber);
-
-            // console.log({ value, versSearched, versesSelected, versiculoRange });
-            // console.log(versiculoRange)
-
-            setVersesSelected(versiculoRange);
-
-            return;
-        }
-
-        const number = Number(value);
-        const verseFinded = _cap ? _cap?.verses.find(v => v.number === number) : cap?.verses.find(v => v.number === number);
-
-        setVersesSelected(verseFinded ? [verseFinded] : []);
-
-
-    }
-
-    useEffect(() => {
-        searchBook(book?.title as string);
-        const teste = searchCap(cap?.number as number);
-        searchVerses(versSearched, teste);
-    }, [bible?.version])
+        setCapNumbers(await getCapNumber(version, book));
+    }, [version])
 
     useEffect(() => {
         const fetchData = async () => {
-            setBible(await getBible(version))
+            const data = await getAllBooks(version);
+            const nameBooks = data.map(b => b.getAttribute("name") as string);
+
+            setBooks(nameBooks);
         }
 
-        fetchData()
-    }, [version]);
+        fetchData();
+    }, [version])
 
     return {
-        book,
-        cap,
+        version,
+        books,
         versesSelected,
-        nameBooks,
-        searchBook,
-        searchCap,
-        searchVerses,
-        changeVersion
+        bookSelected,
+        capSelected,
+        capNumbers,
+        changeVersion,
+        searchVerse,
+        changeCap,
+        changeBook
     }
 }
 

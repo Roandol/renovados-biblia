@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Typography } from 'antd';
 import { useState } from 'react';
-import { Verse } from '../Hooks/useBible';
+import { Verse } from '../Hooks/types';
 
 const { Paragraph, Text } = Typography;
 

@@ -1,0 +1,16 @@
+.box {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+
+    &__button {
+        width: 500px;
+        height: 500px;
+        background-color: rgba(255, 255, 255, 0.594);
+
+    &__text {
+        font-size: 24px;
+    }
+    }
+}

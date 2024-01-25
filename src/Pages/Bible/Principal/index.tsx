@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Row, Col, Select, Typography, Space, Input, Button } from "antd";
-import "./assets/css/biblia.scss";
+import "../../../assets/css/biblia.scss";
 import { DefaultOptionType } from "antd/es/select";
 import { ChangeEvent, useState } from "react";
 import VersDisplay from '../../../Components/VersDisplay';

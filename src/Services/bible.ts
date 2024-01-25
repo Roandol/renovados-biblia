@@ -1,7 +1,7 @@
 import { Verse } from "../Hooks/types";
 import xmlReader from "./xml";
 
-const urlBase = (path: string) => `./assets/xml/bible/${path}.xml`;
+const urlBase = (path: string) => `./assets/xml/${path}.xml`;
 
 export const getAllBooks = async (version: string): Promise<Element[]> => {
     const xmlDoc = await xmlReader(urlBase(version));

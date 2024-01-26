@@ -22,14 +22,14 @@ const Principal: React.FunctionComponent<IPrincipalProps> = () => {
         <Space size={'large'}>
             <Button className="box__button" onClick={handleBiblia}>
                 <Space direction='vertical'>
-                    <Typography.Text className='box__button__text'>Bíblia</Typography.Text>
+                    <Typography.Text strong className='box__button__text'>Bíblia</Typography.Text>
                     <img width={400} height={400} src={bibleIcon} alt="Bíblia" />
                 </Space>
             </Button>
-            <Button className="box__button">
+            <Button className="box__button" onClick={handleHarpas}>
                 <Space direction='vertical'>
-                    <Typography.Text className='box__button__text' onClick={handleHarpas}>Harpas</Typography.Text>
-                    <img width={350} height={350} src={harpaIcon} alt="Harpa" />
+                    <Typography.Text strong className='box__button__text'>Harpa Cristã</Typography.Text>
+                    <img width={400} height={400} src={harpaIcon} alt="Harpa" />
                 </Space>
             </Button>
         </Space>

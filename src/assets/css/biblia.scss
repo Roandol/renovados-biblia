@@ -4,10 +4,8 @@
 }
 
 body {
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
+  background-image: linear-gradient(rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)),
     url("../images/logo.jpeg");
   background-position: center center;
   background-attachment: fixed;
@@ -20,7 +18,7 @@ body {
   --base-font-size: 17px;
 }
 
-#root {
+.centralizar {
   max-width: 1280px;
   margin: 0 auto;
   padding: 1rem;

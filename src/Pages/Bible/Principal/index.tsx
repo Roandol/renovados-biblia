@@ -105,7 +105,7 @@ const Principal: React.FunctionComponent<IPrincipalProps> = () => {
         },
     ];
     return (
-        <>
+        <div className='centralizar'>
             <Row>
                 <Col md={6} xs={12}>
                     <Select
@@ -191,7 +191,7 @@ const Principal: React.FunctionComponent<IPrincipalProps> = () => {
                     </Row>
                 </Col>
             </Row>
-        </>
+        </div>
     );
 };
 

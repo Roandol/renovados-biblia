@@ -17,3 +17,13 @@ export interface Biblia {
     books: Book[];
     version: string;
 }
+
+export interface Verses {
+    name: string,
+    lines: string[]
+}
+
+export interface Harp {
+    title: string,
+    verses: Verses[]
+}

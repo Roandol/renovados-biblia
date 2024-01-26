@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes, } from "react-router-dom";
 import Bible from "./Pages/Bible/Principal";
 import Principal from "./Pages/Principal";
+import Harpas from "./Pages/Harpas/Principal";
 
 const App = () => {
 
@@ -9,7 +10,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Principal />} />
         <Route path="/biblia" element={<Bible />} />
-        <Route path="/harpas" />
+        <Route path="/harpas" element={<Harpas />} />
       </Routes>
     </BrowserRouter>
   </>

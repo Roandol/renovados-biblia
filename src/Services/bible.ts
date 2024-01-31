@@ -10,13 +10,12 @@ export const getAllBooks = async (version: string): Promise<Element[]> => {
     return booksElements;
 }
 
-export const getVers = async (book: string, cap: number, vers: number[], version: string): Promise<Verse[]> => {
+export const getVers = async (book: string, cap: number, [versInitial, versEnd]: number[], version: string): Promise<Verse[]> => {
     const bookElements = await getAllBooks(version);
     const bookSelected = bookElements.find(b => b.getAttribute("name") === book) as Element;
     const capSelected = bookSelected.querySelector(`c[n="${cap}"]`) as Element;
-    const [versInital, versEnd] = vers;
     const allVerss = [...capSelected.querySelectorAll("v")];
-    const verssRange = allVerss.slice(versInital - 1, versEnd ?? versInital);
+    const verssRange = allVerss.slice(versInitial - 1, versEnd ?? versInitial);
     const verseList: Verse[] = verssRange.map(v => ({
         number: Number(v.getAttribute("n")),
         content: v.textContent as string
